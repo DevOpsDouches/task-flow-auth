@@ -34,7 +34,7 @@ pipeline {
         }
         
         stage('Push to Dockerhub and Logout') {
-            agent { label 'test' }
+            agent { label 'dev' }
             when {
                 expression { currentBuild.currentResult == "SUCCESS" }
             }
@@ -64,8 +64,6 @@ pipeline {
             node('dev') {
                 script {
                     sh """ 
-                    sudo docker stop myapp-test
-                    sudo docker rm myapp-test
                     sudo docker rmi ${IMAGE_NAME}:${IMAGE_TAG} || true
                     """
                 }
@@ -76,8 +74,6 @@ pipeline {
             node('dev') {
                 script {
                     sh """ 
-                    sudo docker stop myapp-test
-                    sudo docker rm myapp-test
                     sudo docker rmi ${IMAGE_NAME}:${IMAGE_TAG} || true
                     """
                 }
